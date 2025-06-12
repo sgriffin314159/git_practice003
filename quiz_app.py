@@ -33,7 +33,7 @@ def build_quiz_app():
         question_dropdown = gr.Dropdown(label="Select a question", choices=question_list)
         question_display = gr.Textbox(label="Question", interactive=False)
         options_radio = gr.Radio(label="Choose your answer", choices=[])
-        feedback_box = gr.Textbox(label="Feedback", interactive=False)
+        feedback_box = gr.Textbox(label="Your Feedback will appear here", interactive=False)
 
         # Updates the displayed question and answer options
         def update_question(question_text):
@@ -54,7 +54,7 @@ def build_quiz_app():
             q_index = question_list.index(question_text)
             return check_answer(user_choice, q_index)
 
-        check_button = gr.Button("Check")
+        check_button = gr.Button("Click this button to Check your answer")
         check_button.click(
             fn=on_check,
             inputs=[question_display, options_radio],
