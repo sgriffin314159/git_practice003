@@ -1,9 +1,10 @@
 # Gradio web app for quiz game
-# 1) Import the gradio library and our local quiz_data module
+
+# Import the gradio library and our local quiz_data module
 import gradio as gr
 from quiz_data import QUIZ_QUESTIONS
 
-# 2) Define a function to check the user's answer
+# Define a function to check the user's answer
 def check_answer(selected_option, question_index):
     # We use control flow here: if the selected answer matches the correct one, we return "Correct!"
     if selected_option == QUIZ_QUESTIONS[question_index]["answer"]:
@@ -11,21 +12,21 @@ def check_answer(selected_option, question_index):
     else:
         return "Incorrect. The correct answer is: " + QUIZ_QUESTIONS[question_index]["answer"]
 
-# 3) Define a helper function that returns only question texts (using a list comprehension!)
+# Define a helper function that returns only question texts (using a list comprehension!)
 def generate_question_texts():
     return [q["question"] for q in QUIZ_QUESTIONS]
 
-# 4) Define a function that finds the question and its options, given a question text
+# Define a function that finds the question and its options, given a question text
 def quiz_interface(question_text):
-    # We'll locate the question index by searching in QUIZ_QUESTIONS
+    # Locate the question index by searching in QUIZ_QUESTIONS
     question_idx = [index for (index, q) in enumerate(QUIZ_QUESTIONS) if q["question"] == question_text][0]
     if question_idx is None:
         return None, []
     return question_text, QUIZ_QUESTIONS[question_idx]["options"]
 
-# 5) Build the Gradio demo using Blocks
+# Build the Gradio demo using Blocks
 def build_quiz_app():
-    # Our list of question texts
+    # List the quiz questions
     question_list = generate_question_texts()
 
     with gr.Blocks() as demo:
@@ -63,8 +64,9 @@ def build_quiz_app():
 
     return demo
 
-# 6) Launch the Gradio app if the script is run directly
+# Launch the Gradio app if the script is run directly
 if __name__ == "__main__":
+    print("\nWelcome to a math quiz! Hooray!\n")
     demo = build_quiz_app()
     demo.launch()
-    # demo.launch(share = Ture) # If you want to create public URL
+    # demo.launch(share = True) # If you want to create public URL
