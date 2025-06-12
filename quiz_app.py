@@ -1,24 +1,23 @@
 # Gradio web app for quiz game
 
-# Import the gradio library and our local quiz_data module
+# Import gradio library and local quiz_data module
 import gradio as gr
 from quiz_data import QUIZ_QUESTIONS
 
-# Define a function to check the user's answer
+# Check the user's answer
 def check_answer(selected_option, question_index):
-    # We use control flow here: if the selected answer matches the correct one, we return "Correct!"
     if selected_option == QUIZ_QUESTIONS[question_index]["answer"]:
         return "Correct!"
     else:
         return "Incorrect. The correct answer is: " + QUIZ_QUESTIONS[question_index]["answer"]
 
-# Define a helper function that returns only question texts (using a list comprehension!)
+# Helper function to return question texts
 def generate_question_texts():
     return [q["question"] for q in QUIZ_QUESTIONS]
 
-# Define a function that finds the question and its options, given a question text
+# Find question and its options, given a question text
 def quiz_interface(question_text):
-    # Locate the question index by searching in QUIZ_QUESTIONS
+    # Locate the question index by searching QUIZ_QUESTIONS
     question_idx = [index for (index, q) in enumerate(QUIZ_QUESTIONS) if q["question"] == question_text][0]
     if question_idx is None:
         return None, []
@@ -36,7 +35,7 @@ def build_quiz_app():
         options_radio = gr.Radio(label="Choose your answer", choices=[])
         feedback_box = gr.Textbox(label="Feedback", interactive=False)
 
-        # This function updates the displayed question and answer options
+        # Updates the displayed question and answer options
         def update_question(question_text):
             q_text, opts = quiz_interface(question_text)
             if q_text is None:
@@ -64,7 +63,7 @@ def build_quiz_app():
 
     return demo
 
-# Launch the Gradio app if the script is run directly
+# Launch the Gradio app 
 if __name__ == "__main__":
     print("\nWelcome to a math quiz! Hooray!\n")
     demo = build_quiz_app()
